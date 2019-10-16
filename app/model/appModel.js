@@ -1,15 +1,15 @@
-'user strict';
+'use strict';
+var sql = require('./db.js');
 
-import { stat } from "fs";
-import { SSL_OP_NO_QUERY_MTU } from "constants";
 
-var Task = function(task){
-    this.task = task.task;
-    this.status = task.status
+var Room = function(code){
+    this.code = code;
     this.created_at = new Date();
 };
-Task.createTask = function (newtask, result) {
-    sql.query("INSERT INFO tasks set ?", newTask, function (err, res) {
+
+
+Room.createRoom = function (room, result) {
+    sql.query("INSERT INTO rooms set ?", room, function (err, res) {
         if(err) {
             console.log("error: ",err);
             result(err, null);
@@ -20,6 +20,12 @@ Task.createTask = function (newtask, result) {
         }
     });
 };
+
+
+
+
+
+
 Task.getTaskById = function (taskId, result) {
     sql.query("Select task from tasks where id = ? ", taskId, function (err, res) {
         if(err) {
@@ -49,9 +55,6 @@ Task.updateById = function(id, task, result){
         if(err) {
             console.log("error: ", err);
             result(null, err);
-        }
-        else{
-            result(null, res);
         }
         else{
             result(null, res);

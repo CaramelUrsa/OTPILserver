@@ -1,6 +1,32 @@
 'use strict';
 
-var Task = require('../appModel.js');
+var Room = require('../model/appModel.js');
+
+
+
+exports.create_a_room = function(req, res) {
+    var new_room = new Room("8878");
+
+    if(!new_task.task || !new_task.status){
+        res.status(400).send({error:true, message: 'Please provide task/status' });
+    }
+    else{
+        Room.createTask(new_room, function(err, task) {
+            if (err)
+            res.send(err);
+            res.json(task);
+        });
+    }
+};
+
+
+
+
+
+
+
+
+
 
 exports.list_all_tasks = function(req, res) {
     Task.getAllTask(function(err, task) {
@@ -10,20 +36,6 @@ exports.list_all_tasks = function(req, res) {
         console.log('res', task);
         res.send(task);
     });
-};
-
-exports.create_a_task = function(req, res) {
-    var new_task = new Task(req.body);
-    if(!new_task.task || !new_task.status){
-        res.status(400).send({error:true, message: 'Please provide task/status' });
-    }
-    else{
-        Task.createTask(new_task, function(err, task) {
-            if (err)
-            res.send(err);
-            res.json(task);
-        });
-    }
 };
 
 exports.read_a_task = function(req, res) {

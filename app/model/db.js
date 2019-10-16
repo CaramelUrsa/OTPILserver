@@ -1,12 +1,12 @@
-'user strict';
+'use strict';
 
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
     host        :       'localhost',
     user        :       'root',
-    password    :       '',
-    database    :       'OOTPIL'
+    password    :       'aliasapps',
+    database    :       'OOTPILtest'
 });
 
 connection.connect(function(err) {
