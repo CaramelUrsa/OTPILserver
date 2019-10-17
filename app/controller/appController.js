@@ -1,21 +1,34 @@
 'use strict';
 
-var Room = require('../model/appModel.js');
-
-
+var Room = require('../model/roomModel.js');
+var Player = require('../model/playerModel.js');
+var roomcobe = '8878';
 
 exports.create_a_room = function(req, res) {
-    var new_room = new Room("8878");
 
-    if(!new_task.task || !new_task.status){
-        res.status(400).send({error:true, message: 'Please provide task/status' });
+    var room = new Room(roomcobe);
+    var player = new Player(req.body.player_name, roomcobe);
+
+    if(!req.body.player_name){
+        console.log(req);
+        res.status(400).send({error:true, message: 'Please provide player' });
     }
     else{
-        Room.createTask(new_room, function(err, task) {
-            if (err)
-            res.send(err);
-            res.json(task);
-        });
+        Room.createRoom(room, 
+            
+            function(err, room) {
+            console.log('Creating room...');;
+            }
+        );
+
+
+        Player.createPlayer(player, 
+            
+            function(err, player) {
+                console.log('Creating player...');
+            }
+        );
+
     }
 };
 
@@ -25,9 +38,7 @@ exports.create_a_room = function(req, res) {
 
 
 
-
-
-
+/*
 exports.list_all_tasks = function(req, res) {
     Task.getAllTask(function(err, task) {
         console.log('controller')
@@ -61,3 +72,4 @@ exports.delete_a_task = function(req, res) {
         res.json({ message: 'Task successfully deleted' });
     });
 };
+*/

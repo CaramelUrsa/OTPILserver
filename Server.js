@@ -9,7 +9,7 @@ const mc = mysql.createConnection({
     host        :   'localhost',
     user        :   'root',
     password    :   'aliasapps',
-    database    :   'OOTPILtest'
+    database    :   'TOTPAL'
 });
 
 mc.connect();
