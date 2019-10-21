@@ -14,3 +14,4 @@ Player.createPlayer = function (player, result) {
         }
     });
 };
+module.exports = Player;

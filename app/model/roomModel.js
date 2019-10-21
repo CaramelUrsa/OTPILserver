@@ -1,12 +1,12 @@
 'use strict';
 var sql = require('./db.js');
 
-var Room = function(code){
+var Room =function(code){
     this.roomcode = code;
 };
 
-Room.createRoom = function (room, result) {
-    sql.query("INSERT INTO rooms set ?", room, function (err, res) {
+Room.createRoom = function(room, result) {
+    sql.query("INSERT INTO rooms set ?", room, function(err, res) {
         if(err) {
             console.log("error: ",err);
             result(err, null);
@@ -17,3 +17,4 @@ Room.createRoom = function (room, result) {
         }
     });
 };
+module.exports = Room;

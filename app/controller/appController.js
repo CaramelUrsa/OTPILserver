@@ -1,13 +1,16 @@
 'use strict';
 
+//import {Room} from '../model/roomModel.js';
 var Room = require('../model/roomModel.js');
 var Player = require('../model/playerModel.js');
-var roomcobe = '8878';
 
 exports.create_a_room = function(req, res) {
 
-    var room = new Room(roomcobe);
-    var player = new Player(req.body.player_name, roomcobe);
+    var tempcode = '8878';
+    var room = new Room(tempcode);
+    var player = new Player(req.body.player_name, tempcode);
+    
+
 
     if(!req.body.player_name){
         console.log(req);
@@ -17,7 +20,7 @@ exports.create_a_room = function(req, res) {
         Room.createRoom(room, 
             
             function(err, room) {
-            console.log('Creating room...');;
+            console.log('Creating room...');
             }
         );
 
@@ -26,6 +29,7 @@ exports.create_a_room = function(req, res) {
             
             function(err, player) {
                 console.log('Creating player...');
+                res.json(player);
             }
         );
 
