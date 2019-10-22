@@ -21,6 +21,7 @@ exports.create_a_room = function(req, res) {
             
             function(err, room) {
             console.log('Creating room...');
+            res.json(player.leader_status);
             }
         );
 
