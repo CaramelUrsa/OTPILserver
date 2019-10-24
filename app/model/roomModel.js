@@ -1,5 +1,6 @@
 'use strict';
 var sql = require('./db.js');
+const mc = require('./db.js');
 
 var Room =function(code){
     this.roomcode = code;
@@ -17,4 +18,12 @@ Room.createRoom = function(room, result) {
         }
     });
 };
+
+Room.getRooms = function(conres, senres) {
+    mc.query('SELECT * FROM rooms', (err,rows) => {
+        if (err) throw err;
+        
+        console.log(conres);
+    });
+}
 module.exports = Room;

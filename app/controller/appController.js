@@ -37,9 +37,11 @@ exports.create_a_room = function(req, res) {
     }
 };
 
-
-
-
+exports.get_all_rooms = function (req, res) {
+    Room.getRooms(
+        'Greetings, from appController.js!'
+    )
+}
 
 
 
