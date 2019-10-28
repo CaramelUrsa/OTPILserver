@@ -9,7 +9,6 @@ exports.create_a_room = function(req, res) {
     var tempcode = '8878';
     var room = new Room(tempcode);
     var player = new Player(req.body.player_name, tempcode);
-    
 
 
     if(!req.body.player_name){
@@ -40,47 +39,19 @@ exports.create_a_room = function(req, res) {
 exports.get_all_rooms = function (req, res) {
     Room.getRooms(
         function(err, rooms) {
-            console.log('error: ' + err);
-            res.send(rooms);
-            Room.genCode()
+            console.log(rooms);
+            var codelist = [];
+            for(var i = 0;i < rooms.length; i++){
+                codelist.push(rooms[i].roomcode);
+            }
+            Room.genCode(
+                4,
+                function(generatedcode) {
+                    generatedcode = generatedcode.toString();
+                    res.send(generatedcode)
+                }
+            )
+
         }
     )
 }
-
-
-
-/*
-exports.list_all_tasks = function(req, res) {
-    Task.getAllTask(function(err, task) {
-        console.log('controller')
-        if (err)
-        res.send(err);
-        console.log('res', task);
-        res.send(task);
-    });
-};
-
-exports.read_a_task = function(req, res) {
-    Task.getTaskById(req.param.taskId, function(err, task) {
-        iff (err)
-        res.send(err);
-        res.json(task);
-    });
-};
-
-exports.update_a_task = function(req, res) {
-    Task.updateById(req.param.taskId, new Task(req.body), function(err, task) {
-        if (err)
-        res.send(err);
-        res.json(task);
-    });
-};
-
-exports.delete_a_task = function(req, res) {
-    Task.remove( req.params.taskId, function(err, task) {
-        if (err)
-        res.send(err);
-        res.json({ message: 'Task successfully deleted' });
-    });
-};
-*/

@@ -31,9 +31,13 @@ Room.getRooms = function(result) {
     });
 }
 
-Room.genCode = function() {
-    var code = Math.floor((Math.random()) * 10000)
-    console.log('newcode:' + code)
+Room.genCode = function(length, result) {
+    var res = 0;
+    while(res < Math.pow(10, length - 1)){
+        console.log('loop');
+    res = Math.floor(Math.random() * Math.pow(10, length));
+    }
+    result(res);
 }
 
 module.exports = Room;
