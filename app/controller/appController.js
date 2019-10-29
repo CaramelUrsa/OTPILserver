@@ -5,8 +5,18 @@ var Room = require('../model/roomModel.js');
 var Player = require('../model/playerModel.js');
 
 exports.create_a_room = function(req, res) {
+    
+    var tempcode = '';
 
-    var tempcode = '8878';
+    Room.genCode(
+        4,
+        function(generatedcode) {
+            tempcode = generatedcode.toString();
+            console.log(tempcode)
+        }
+        
+    )
+
     var room = new Room(tempcode);
     var player = new Player(req.body.player_name, tempcode);
 
@@ -20,7 +30,7 @@ exports.create_a_room = function(req, res) {
             
             function(err, room) {
             console.log('Creating room...');
-            res.json(player.leader_status);
+            res.json(room);
             }
         );
 
@@ -50,8 +60,8 @@ exports.get_all_rooms = function (req, res) {
                     generatedcode = generatedcode.toString();
                     res.send(generatedcode)
                 }
+                
             )
-
         }
     )
 }

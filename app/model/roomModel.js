@@ -12,8 +12,8 @@ Room.createRoom = function(room, result) {
             result(err, null);
         }
         else{
-            console.log(res.insertId);
-            result(null, res.insertId);
+            console.log(res);
+            result(null, room);
         }
     });
 };
@@ -26,6 +26,15 @@ Room.getRooms = function(result) {
         }
         else{
             console.log(res);
+            result(null, res);
+        }
+    });
+}
+
+Room.getPlayers = function(result) {
+    sql.query('SELECT * FROM players', function(err, res) {
+        if(err) {
+            console.log('error: ',err);
             result(null, res);
         }
     });
