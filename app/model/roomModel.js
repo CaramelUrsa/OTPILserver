@@ -35,6 +35,10 @@ Room.getPlayers = function(result) {
     sql.query('SELECT * FROM players', function(err, res) {
         if(err) {
             console.log('error: ',err);
+            result(err, null);
+        }
+        else{
+            console.log(res);
             result(null, res);
         }
     });
