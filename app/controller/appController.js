@@ -16,9 +16,9 @@ exports.create_a_room = function (req, res) {
         }
 
     )
-
+    var booltrue = 1;
     var room = new Room(tempcode);
-    var player = new Player(req.body.player_name, tempcode);
+    var player = new Player(req.body.player_name, tempcode, booltrue);
 
 
     if (!req.body.player_name) {
