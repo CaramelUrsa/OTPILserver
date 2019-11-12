@@ -92,3 +92,22 @@ exports.get_all_players = function (req, res) {
         }
     )
 }
+
+exports.create_a_player = function (req, res) {
+    if(!req.body.game_code) {
+        res.status(400).send({ error: true, message: 'Please provide the code of the room'});
+    } else {
+        if (!req.body.player_name) {
+            res.status(400).send({ error: true, message: 'Please provide the code of the room'});
+        } else {
+            var player = new Player(req.body.player_name, req.body.game_code, 0);
+            Player.createPlayer(player,
+
+                function (err, player) {
+                    console.log('Creating player...');
+                    res.json(player);
+                })
+                res.send(player);
+        }
+    }
+}
