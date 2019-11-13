@@ -5,6 +5,12 @@ var Room =function(code){
     this.roomcode = code;
 };
 
+var EditReq = function(ColToEdit, setTo, Name){
+    this.toedit = ColToEdit;
+    this.setto = setTo;
+    this.name = Name
+};
+
 Room.createRoom = function(room, result) {
     sql.query("INSERT INTO rooms set ?", room, function(err, res) {
         if(err) {
@@ -52,5 +58,12 @@ Room.genCode = function(length, result) {
     }
     result(res);
 }
+
+Room.editPlayer = function(editReq ,result) {
+    sql.query('UPDATE `TOTPAL`.`players` SET `'+editReq.toedit+'`='+editReq.setto+' WHERE `idplayers`='+editReq.name+';', function (err, res){
+        if(err) throw err;
+        res.send(JSON.stringify(res))
+    });
+};
 
 module.exports = Room;

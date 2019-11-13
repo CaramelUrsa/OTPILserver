@@ -1,10 +1,11 @@
 'use strict';
 var sql = require('./db.js');
 
-var Player = function(name, status, leader){
+var Player = function(name, status, leader, isready){
     this.player_name = name;
     this.leader_status = status;
     this.is_leader = leader;
+    this.is_ready = isready;
 };
 
 Player.createPlayer = function (player, result) {

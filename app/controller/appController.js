@@ -3,6 +3,7 @@
 //import {Room} from '../model/roomModel.js';
 var Room = require('../model/roomModel.js');
 var Player = require('../model/playerModel.js');
+var EditReq = require('../model/roomModel.js');
 
 exports.create_a_room = function (req, res) {
 
@@ -18,7 +19,7 @@ exports.create_a_room = function (req, res) {
     )
     var booltrue = 1;
     var room = new Room(tempcode);
-    var player = new Player(req.body.player_name, tempcode, booltrue);
+    var player = new Player(req.body.player_name, tempcode, booltrue, 0);
 
 
     if (!req.body.player_name) {
@@ -94,20 +95,41 @@ exports.get_all_players = function (req, res) {
 }
 
 exports.create_a_player = function (req, res) {
-    if(!req.body.game_code) {
-        res.status(400).send({ error: true, message: 'Please provide the code of the room'});
+    if (!req.body.game_code) {
+        res.status(400).send({ error: true, message: 'Please provide the code of the room' });
     } else {
         if (!req.body.player_name) {
-            res.status(400).send({ error: true, message: 'Please provide the code of the room'});
+            res.status(400).send({ error: true, message: 'Please provide the code of the room' });
         } else {
-            var player = new Player(req.body.player_name, req.body.game_code, 0);
+            var player = new Player(req.body.player_name, req.body.game_code, 0, 0);
             Player.createPlayer(player,
 
                 function (err, player) {
                     console.log('Creating player...');
                     res.json(player);
                 })
-                res.send(player);
+            res.send(player);
+        }
+    }
+}
+
+exports.edit_a_player = function (req, res) {
+    if (!req.body.Name) {
+        res.status(400).send({ error: true, message: 'Please provide the name of the player you would like to edit' });
+    } else {
+        if (!req.body.ToEdit) {
+            res.status(400).send({ error: true, message: 'Please provide the name of the feild you wish to edit' });
+        } else {
+            if (!req.body.SetTo) {
+                res.status(400).send({ error: true, message: 'Please provide the desired value to set the feild to' });
+            } else {
+                var editReq = new EditReq(req.body.ToEdit, req.body.SetTo, req.body.Name)
+                Room.editPlayer(editReq,
+                    function (err, editReq) {
+                        console.log('Editing player...');
+                        res.json(editReq);
+                    });
+            }
         }
     }
 }
