@@ -7,8 +7,7 @@ module.exports = function(app) {
     var B = '';
 
 app.route('/room').post(todoList.create_a_room);
-app.route('/getRooms').get(todoList.get_all_rooms);
 app.route('/getPlayers').post(todoList.get_all_players);
 app.route('/player').post(todoList.create_a_player);
-app.route('/editPlayers').post(todoList.edit_a_player);
+app.route('/test').post(todoList.test);
 };

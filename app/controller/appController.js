@@ -3,7 +3,6 @@
 //import {Room} from '../model/roomModel.js';
 var Room = require('../model/roomModel.js');
 var Player = require('../model/playerModel.js');
-var EditReq = require('../model/roomModel.js');
 
 exports.create_a_room = function (req, res) {
 
@@ -47,25 +46,6 @@ exports.create_a_room = function (req, res) {
     }
 };
 
-exports.get_all_rooms = function (req, res) {
-    Room.getRooms(
-        function (err, rooms) {
-            console.log(rooms);
-            var codelist = [];
-            for (var i = 0; i < rooms.length; i++) {
-                codelist.push(rooms[i].roomcode);
-            }
-            Room.genCode(
-                4,
-                function (generatedcode) {
-                    generatedcode = generatedcode.toString();
-                    res.send(generatedcode)
-                }
-
-            )
-        }
-    )
-}
 
 exports.get_all_players = function (req, res) {
     Room.getPlayers(
@@ -75,14 +55,14 @@ exports.get_all_players = function (req, res) {
             for (var i = 0; i < players.length; i++) {
                 playerlist.push(players[i]);
             }
-            if (!req.body.wanted_code) {
+            if (!req.body.room_code) {
                 console.log(req);
                 res.status(400).send({ error: true, message: 'Please provide desired room code' });
             } else {
-                var wantedCode = req.body.wanted_code;
+                var wantedCode = req.body.room_code;
                 var wantedList = [];
                 for (var i = 0; i < playerlist.length; i++) {
-                    if (playerlist[i].leader_status == wantedCode) {
+                    if (playerlist[i].room_code == wantedCode) {
                         wantedList.push(playerlist[i])
                     } else {
 
@@ -95,13 +75,13 @@ exports.get_all_players = function (req, res) {
 }
 
 exports.create_a_player = function (req, res) {
-    if (!req.body.game_code) {
-        res.status(400).send({ error: true, message: 'Please provide the code of the room' });
+    if (!req.body.room_code) {
+        res.status(400).send({ error: true, message: 'Null field: room_code' });
     } else {
         if (!req.body.player_name) {
-            res.status(400).send({ error: true, message: 'Please provide the code of the room' });
+            res.status(400).send({ error: true, message: 'Null field: player_name' });
         } else {
-            var player = new Player(req.body.player_name, req.body.game_code, 0, 0);
+            var player = new Player(req.body.player_name, req.body.room_code, 0);
             Player.createPlayer(player,
 
                 function (err, player) {
@@ -113,23 +93,6 @@ exports.create_a_player = function (req, res) {
     }
 }
 
-exports.edit_a_player = function (req, res) {
-    if (!req.body.Name) {
-        res.status(400).send({ error: true, message: 'Please provide the name of the player you would like to edit' });
-    } else {
-        if (!req.body.ToEdit) {
-            res.status(400).send({ error: true, message: 'Please provide the name of the feild you wish to edit' });
-        } else {
-            if (!req.body.SetTo) {
-                res.status(400).send({ error: true, message: 'Please provide the desired value to set the feild to' });
-            } else {
-                var editReq = new EditReq(req.body.ToEdit, req.body.SetTo, req.body.Name)
-                Room.editPlayer(editReq,
-                    function (err, editReq) {
-                        console.log('Editing player...');
-                        res.json(editReq);
-                    });
-            }
-        }
-    }
+exports.test = function (res) {
+    res.send('test');
 }
