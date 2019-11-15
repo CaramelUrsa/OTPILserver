@@ -46,34 +46,6 @@ exports.create_a_room = function (req, res) {
     }
 };
 
-
-exports.get_all_players = function (req, res) {
-    Room.getPlayers(
-        function (err, players) {
-            console.log(players);
-            var playerlist = [];
-            for (var i = 0; i < players.length; i++) {
-                playerlist.push(players[i]);
-            }
-            if (!req.body.room_code) {
-                console.log(req);
-                res.status(400).send({ error: true, message: 'Please provide desired room code' });
-            } else {
-                var wantedCode = req.body.room_code;
-                var wantedList = [];
-                for (var i = 0; i < playerlist.length; i++) {
-                    if (playerlist[i].room_code == wantedCode) {
-                        wantedList.push(playerlist[i])
-                    } else {
-
-                    }
-                }
-                res.send(wantedList);
-            }
-        }
-    )
-}
-
 exports.create_a_player = function (req, res) {
     if (!req.body.room_code) {
         res.status(400).send({ error: true, message: 'Null field: room_code' });
@@ -88,11 +60,20 @@ exports.create_a_player = function (req, res) {
                     console.log('Creating player...');
                     res.json(player);
                 })
-            res.send(player);
+            res.json(player);
         }
     }
 }
 
-exports.test = function (res) {
-    res.send('test');
+exports.get_room_players = function (req, res) {
+    if (!req.body.room_code) {
+        res.status(400).send({ error: true, message: 'Null field: room_code' });
+    } else {
+        Player.getRoomPlayers(
+            function (err, players) {
+                res.send(players);
+            },
+            req.body.room_code
+        )
+    }
 }

@@ -15,4 +15,31 @@ Player.createPlayer = function (player, result) {
         }
     });
 };
+
+Player.getRoomPlayers = function(result, room) {
+    sql.query("SELECT * FROM players WHERE room_code = '"+room+"'", function(err, res) {
+        if(err) {
+            console.log('error: ',err);
+            result(err, null);
+        }
+        else{
+            //console.log(res);
+            result(null, res);
+        }
+    });
+}
+
+Player.getPlayers = function(result) {
+    sql.query('SELECT * FROM players', function(err, res) {
+        if(err) {
+            console.log('error: ',err);
+            result(err, null);
+        }
+        else{
+            console.log(res);
+            result(null, res);
+        }
+    });
+}
+
 module.exports = Player;

@@ -31,23 +31,6 @@ Room.getRooms = function(result) {
     });
 }
 
-Room.getPlayers = function(result) {
-    sql.query('SELECT * FROM players', function(err, res) {
-        if(err) {
-            console.log('error: ',err);
-            result(err, null);
-        }
-        else{
-            console.log(res);
-            result(null, res);
-        }
-    });
-}
-
-
-
-
-
 Room.genCode = function(length, result) {
     var res = 0;
     while(res < Math.pow(10, length - 1)){
