@@ -77,3 +77,24 @@ exports.get_room_players = function (req, res) {
         )
     }
 }
+
+exports.join_a_game = function (req, res) {
+    if (!req.body.player_name) {
+        res.status(400).send({ error: true, message: 'Null field: player_name' });
+    } else {
+        if (!req.body.room_code) {
+            res.status(400).send({ error: true, message: 'Null field: room_code' });
+        } else {
+            Player.getRoomPlayers(
+                function (err, players) {
+                    var temp = [];
+                    for(var i = 0;i<players.length;i++) {
+                        temp.push(players[i].player_name)
+                    }
+                    res.send(temp);
+                },
+                req.body.room_code
+            )
+        }
+    }
+}
