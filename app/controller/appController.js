@@ -46,6 +46,15 @@ exports.create_a_room = function (req, res) {
     }
 };
 
+exports.get_all_rooms = function (req, res) {
+    Room.getRooms(
+        function (err, room) {
+            console.log(room);
+            res.json(room);
+        }
+    )
+}
+
 exports.create_a_player = function (req, res) {
     if (!req.body.room_code) {
         res.status(400).send({ error: true, message: 'Null field: room_code' });
@@ -78,20 +87,16 @@ exports.get_room_players = function (req, res) {
     }
 }
 
-exports.join_a_game = function (req, res) {
-    if (!req.body.player_name) {
-        res.status(400).send({ error: true, message: 'Null field: player_name' });
+exports.start_the_game = function (req, res) {
+    if (!req.body.room_code) {
+        res.status(400).send({ error: true, message: 'Null field: room_code' });
     } else {
-        if (!req.body.room_code) {
-            res.status(400).send({ error: true, message: 'Null field: room_code' });
+        if (!req.body.field) {
+            res.status(400).send({ error: true, message: 'Null field: field' });
         } else {
-            Player.getRoomPlayers(
-                function (err, players) {
-                    var temp = [];
-                    for(var i = 0;i<players.length;i++) {
-                        temp.push(players[i].player_name)
-                    }
-                    res.send(temp);
+            Room.startGame(req.body.field, req.body.room_code,
+                function (err) {
+                    res.send('done');
                 },
                 req.body.room_code
             )
