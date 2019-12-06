@@ -3,6 +3,7 @@
 //import {Room} from '../model/roomModel.js';
 var Room = require('../model/roomModel.js');
 var Player = require('../model/playerModel.js');
+var Article = require('../model/articleModel.js');
 
 exports.create_a_room = function (req, res) {
 
@@ -26,13 +27,6 @@ exports.create_a_room = function (req, res) {
         res.status(400).send({ error: true, message: 'Please provide player' });
     }
     else {
-        Room.createRoom(room,
-
-            function (err, room) {
-                console.log('Creating room...');
-                res.json(room);
-            }
-        );
 
 
         Player.createPlayer(player,
@@ -42,6 +36,17 @@ exports.create_a_room = function (req, res) {
                 res.json(player);
             }
         );
+
+        Room.createRoom(room,
+
+            function (err, room) {
+                console.log('Creating room...');
+                res.json(player);
+            }
+        );
+
+
+
 
     }
 };
@@ -87,6 +92,19 @@ exports.get_room_players = function (req, res) {
     }
 }
 
+exports.get_name_players = function (req, res) {
+    if (!req.body.player_name) {
+        res.status(400).send({ error: true, message: 'Null field: player_name' });
+    } else {
+        Player.getNamePlayers(
+            function (err, players) {
+                res.send(players);
+            },
+            req.body.player_name
+        )
+    }
+}
+
 exports.start_the_game = function (req, res) {
     if (!req.body.room_code) {
         res.status(400).send({ error: true, message: 'Null field: room_code' });
@@ -100,6 +118,29 @@ exports.start_the_game = function (req, res) {
                 },
                 req.body.room_code
             )
+        }
+    }
+}
+
+exports.create_an_article = function (req, res) {
+    if (!req.body.article_name) {
+        res.status(400).send({ error: true, message: 'Null field: article_name' });
+    } else {
+        if (!req.body.player_id) {
+            res.status(400).send({ error: true, message: 'Null field: player_id' });
+        } else {
+            if (!req.body.room_code) {
+                res.status(400).send({ error: true, message: 'Null field: room_code' });
+            } else {
+                var article = new Article(req.body.article_name, req.body.player_id, req.body.room_code, 0, 0);
+                Article.createArticle(article,
+
+                    function (err, article) {
+                        console.log('Creating article...');
+                        res.json(article);
+                    })
+                res.json(article);
+            }
         }
     }
 }

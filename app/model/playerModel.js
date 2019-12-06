@@ -23,7 +23,18 @@ Player.getRoomPlayers = function(result, room) {
             result(err, null);
         }
         else{
-            //console.log(res);
+            result(null, res);
+        }
+    });
+}
+
+Player.getNamePlayers = function(result, name) {
+    sql.query("SELECT * FROM players WHERE player_name = '"+name+"'", function(err, res) {
+        if(err) {
+            console.log('error: ',err);
+            result(err, null);
+        }
+        else{
             result(null, res);
         }
     });
