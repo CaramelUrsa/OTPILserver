@@ -18,4 +18,17 @@ Article.createArticle = function (article, result) {
     });
 };
 
+Article.getArticles = function(result) {
+    sql.query('SELECT * FROM articles', function(err, res) {
+        if(err) {
+            console.log('error: ',err);
+            result(err, null);
+        }
+        else{
+            console.log(res);
+            result(null, res);
+        }
+    });
+}
+
 module.exports = Article;

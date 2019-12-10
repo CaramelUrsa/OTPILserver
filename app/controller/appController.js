@@ -144,3 +144,12 @@ exports.create_an_article = function (req, res) {
         }
     }
 }
+
+exports.get_all_articles = function (req, res) {
+    Article.getArticles(
+        function (err, article) {
+            console.log(article);
+            res.json(article);
+        }
+    )
+}
