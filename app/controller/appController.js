@@ -153,3 +153,16 @@ exports.get_all_articles = function (req, res) {
         }
     )
 }
+
+exports.get_room_articles = function (req, res) {
+    if (!req.body.room_code) {
+        res.status(400).send({ error: true, message: 'Null field: room_code' });
+    } else {
+        Article.getRoomArticles(
+            function (err, articles) {
+                res.send(articles);
+            },
+            req.body.room_code
+        )
+    }
+}

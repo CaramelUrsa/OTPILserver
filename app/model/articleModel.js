@@ -31,4 +31,16 @@ Article.getArticles = function(result) {
     });
 }
 
+Article.getRoomArticles = function(result, room) {
+    sql.query("SELECT * FROM articles WHERE room_code = '"+room+"'", function(err, res) {
+        if(err) {
+            console.log('error: ',err);
+            result(err, null);
+        }
+        else{
+            result(null, res);
+        }
+    });
+}
+
 module.exports = Article;
