@@ -42,8 +42,6 @@ Room.genCode = function(length, result) {
 
 Room.startGame = function(field, room, result) {
     sql.query('UPDATE `TOTPAL`.`rooms` SET `game_start`='+field+' WHERE `roomcode`='+room+';', function(err, res) {
-        //UPDATE `TOTPAL`.`rooms` SET `roomcode`='2222' WHERE `idrooms`='101';
-        //'UPDATE `TOTPAL`.`rooms` SET `game_start`=`'+field+'` WHERE `room_code`=`'+room+'`;'
         if(err) {
             console.log('error: ',err);
             result(err, null);

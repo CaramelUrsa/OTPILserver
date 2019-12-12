@@ -166,3 +166,37 @@ exports.get_room_articles = function (req, res) {
         )
     }
 }
+
+exports.article_aprove = function (req, res) {
+    if (!req.body.aprove) {
+        res.status(400).send({ error: true, message: 'Null field: aprove' });
+    } else {
+        if (!req.body.field) {
+            res.status(400).send({ error: true, message: 'Null field: field' });
+        } else {
+            Article.aprove(req.body.field, req.body.aprove,
+                function (err) {
+                    res.send('done');
+                },
+                req.body.aprove
+            )
+        }
+    }
+}
+
+exports.article_decline = function (req, res) {
+    if (!req.body.article_decline) {
+        res.status(400).send({ error: true, message: 'Null field: decline' });
+    } else {
+        if (!req.body.field) {
+            res.status(400).send({ error: true, message: 'Null field: field' });
+        } else {
+            Article.aprove(req.body.field, req.body.decline,
+                function (err) {
+                    res.send('done');
+                },
+                req.body.decline
+            )
+        }
+    }
+}
