@@ -44,7 +44,7 @@ Article.getRoomArticles = function(result, room) {
 }
 
 Article.aprove = function(field, aprove, result) {
-    sql.query('UPDATE `TOTPAL`.`articles` SET `aproval`='+aprove+' WHERE `idarticles`='+field+';', function(err, res) {
+    sql.query("UPDATE `TOTPAL`.`articles` SET `aproval`='"+aprove+"' WHERE `idarticles`='"+field+"';", function(err, res) {
         if(err) {
             console.log('error: ',err);
             result(err, null);
@@ -57,7 +57,7 @@ Article.aprove = function(field, aprove, result) {
 }
 
 Article.decline = function(field, decline, result) {
-    sql.query('UPDATE `TOTPAL`.`articles` SET `decline`='+decline+' WHERE `idarticles`='+field+';', function(err, res) {
+    sql.query("UPDATE `TOTPAL`.`articles` SET `decline`='"+decline+"' WHERE `idarticles`='"+field+"';", function(err, res) {
         if(err) {
             console.log('error: ',err);
             result(err, null);
