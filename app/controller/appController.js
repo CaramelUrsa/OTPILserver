@@ -185,13 +185,13 @@ exports.article_aprove = function (req, res) {
 }
 
 exports.article_decline = function (req, res) {
-    if (!req.body.article_decline) {
+    if (!req.body.decline) {
         res.status(400).send({ error: true, message: 'Null field: decline' });
     } else {
         if (!req.body.field) {
             res.status(400).send({ error: true, message: 'Null field: field' });
         } else {
-            Article.aprove(req.body.field, req.body.decline,
+            Article.decline(req.body.field, req.body.decline,
                 function (err) {
                     res.send('done');
                 },
