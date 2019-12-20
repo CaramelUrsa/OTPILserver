@@ -200,3 +200,32 @@ exports.article_decline = function (req, res) {
         }
     }
 }
+
+exports.edit_article = function (req, res) {
+    if (!req.body.change) {
+        res.status(400).send({ error: true, message: 'Null field: change' });
+    } else {
+        if (!req.body.to) {
+            res.status(400).send({ error: true, message: 'Null field: to' });
+        } else {
+            if (!req.body.where) {
+                res.status(400).send({ error: true, message: 'Null field: where' });
+            } else {
+                if (!req.body.equals) {
+                    res.status(400).send({ error: true, message: 'Null field: equals' });
+                } else {
+                    var change = req.body.change;
+                    var to = req.body.to;
+                    var where = req.body.where;
+                    var equals = req.body.equals;
+                    Article.edit(change, to, where, equals,
+                        function (err) {
+                            res.send('done');
+                        },
+                        req.body.change
+                        )
+                }
+            }
+        }
+    }
+}

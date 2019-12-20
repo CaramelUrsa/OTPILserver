@@ -69,4 +69,17 @@ Article.decline = function(field, decline, result) {
     })
 }
 
+Article.edit = function(toSet, setTo, whereThis, isThis, result) {
+    sql.query("UPDATE `TOTPAL`.`articles` SET `"+toSet+"`='"+setTo+"' WHERE `"+whereThis+"`='"+isThis+"';", function(err, res) {
+        if(err) {
+            console.log('error: ',err);
+            result(err, null);
+        }
+        else {
+            console.log(res);
+            result(null, res);
+        }
+    })
+}
+
 module.exports = Article;

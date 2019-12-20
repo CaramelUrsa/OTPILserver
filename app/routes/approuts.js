@@ -17,4 +17,5 @@ app.route('/garticle').post(todoList.get_all_articles);
 app.route('/groomticle').post(todoList.get_room_articles);
 app.route('/aprove').post(todoList.article_aprove);
 app.route('/decline').post(todoList.article_decline);
+app.route('/edit').post(todoList.edit_article);
 };
